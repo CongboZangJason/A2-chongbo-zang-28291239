@@ -1,0 +1,68 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": "container",
+  "title": "Map of real estate sold in 2018 (Victoria)",
+  "projection": {
+    "type": "mercator",
+    "center": {"expr": "center_to"},
+    "scale": {"expr": "zoom_level"}
+    },
+  "params": [
+      {
+      "name": "zoom_level",
+      "value": 30000,
+      "bind": {
+        "input": "range",
+        "min": 5000,
+        "max": 60000,
+        "step": 1000,
+        "name": "Zoom: "
+      }
+    },
+    {
+      "name": "center_to",
+      "value": [145, -37.85],
+      "bind": {
+        "input": "select",
+        "options": [
+          [145, -37.85],
+          [144.3, -38.1],
+          [144.9, -36.7]
+        ],
+        "labels": ["Melbourne CBD", "Geelong", "Bendigo"],
+        "name": "Map Centre: "
+      }
+    }
+  ],
+  "layer": [
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/CongboZangJason/A2-chongbo-zang-28291239/main/js/vic_localities.json",
+        "format": {"type": "topojson", "feature": "vic_localities"}
+      },
+      "mark": {"type": "geoshape", "fill": "lightgray", "stroke": "white"}
+    },
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/CongboZangJason/A2-chongbo-zang-28291239/main/data/A2%20sold%20clean.csv"
+      },
+      "mark": {"type": "point", "tooltip": {"content": "data"}},
+      "encoding": {
+        "longitude": {"field": "Longitude", "type": "quantitative"},
+        "latitude": {"field": "Latitude", "type": "quantitative"},
+        "color": {
+          "field": "Price",
+          "type": "quantitative",
+          "scale": {"domainMid": 1500000, "scheme": "yelloworangered"}
+        },
+        "tooltip": [
+          {"field": "Street Address", "type": "nominal"},
+          {"field": "Suburb", "type": "nominal"},
+          {"field": "Postcode", "type": "ordinal"},
+          {"field": "Price", "type": "quantitative"}
+        ]
+      }
+    }
+  ]
+}

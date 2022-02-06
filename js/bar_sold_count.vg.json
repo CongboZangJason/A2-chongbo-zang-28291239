@@ -1,0 +1,14 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width":1000,
+    "data": {"url": "https://raw.githubusercontent.com/CongboZangJason/A2-chongbo-zang-28291239/main/data/sold.csv"},
+    "mark":{"type":"bar","tooltip": true},
+    "encoding": {
+        "x": {"aggregate": "count","field": "price"},
+        "y": {
+        "field": "propertyType",
+        "type": "nominal"
+        }
+    }
+}
+  
